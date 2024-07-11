@@ -10,6 +10,8 @@ This project is an encrypted peer-to-peer network chat and relay application des
 
 * Relay Functionality: Relay messages between peers to facilitate communication in a network.
 
+___
+
 ### Installation
 
 ```
@@ -31,6 +33,17 @@ sudo make install
 ```
 
 ___
+
+### Usage
+
+```
+# Start a Listener
+nchat -l 
+
+# Connect to a listener
+nchat <ip-of-listener>
+
+```
 
 ### Contributing
 Contributions are welcome! Please fork this repository and submit a pull request with your changes.
