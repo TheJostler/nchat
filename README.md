@@ -2,7 +2,7 @@
 
 This project is an encrypted peer-to-peer network chat and relay application designed for terminal use. It leverages the libsodium library for robust cryptography.
 
-## Features
+### Features
 
 * Peer-to-Peer Communication: Direct communication between peers without the need for a central server.
 
@@ -10,7 +10,7 @@ This project is an encrypted peer-to-peer network chat and relay application des
 
 * Relay Functionality: Relay messages between peers to facilitate communication in a network.
 
-## Installation
+### Installation
 
 ```
 # On Debian-based systems
@@ -32,11 +32,11 @@ sudo make install
 
 ___
 
-## Contributing
+### Contributing
 Contributions are welcome! Please fork this repository and submit a pull request with your changes.
 
-## License
+### License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Contact
+### Contact
 For any questions or suggestions, please open an issue or reach out to me at [josj@tegosec.com](josj@tegosec.com)
