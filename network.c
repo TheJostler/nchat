@@ -34,7 +34,7 @@ int chat(int socfd, unsigned char tx_key[crypto_kx_SESSIONKEYBYTES], unsigned ch
 	FD_SET(socfd, &fds);    // add peer socket to the fd set
 	while (fdr = fds, select(socfd+1, &fdr, NULL, NULL, NULL) > 0){
 		unsigned char message[MESSAGE_LEN], received_message[MESSAGE_LEN];
-		unsigned char encrypted_packet[CIPHERTEXT_LEN], decrypted[MESSAGE_LEN];
+		unsigned char encrypted_packet[CIPHERTEXT_LEN], decrypted[MESSAGE_LEN+crypto_secretbox_NONCEBYTES];
     	unsigned char received_cipher[CIPHERTEXT_LEN];
 		unsigned char packet[PACKET_BYTES], recieved_packet[PACKET_BYTES];
 		char *b64_packet,  *b64_recieved_packet;
@@ -107,8 +107,8 @@ int relay(int left_peer,  unsigned char left_tx_key[crypto_kx_SESSIONKEYBYTES], 
 		unsigned char left_received_message[MESSAGE_LEN], right_received_message[MESSAGE_LEN];
     	unsigned char left_2_right_packet[PACKET_BYTES], left_recieved_packet[PACKET_BYTES];
     	unsigned char right_2_left_packet[PACKET_BYTES], right_recieved_packet[PACKET_BYTES];
-		unsigned char left_2_right_ciphertext[CIPHERTEXT_LEN], left_decrypted[MESSAGE_LEN];
-		unsigned char right_2_left_ciphertext[CIPHERTEXT_LEN], right_decrypted[MESSAGE_LEN];
+		unsigned char left_2_right_ciphertext[CIPHERTEXT_LEN], left_decrypted[MESSAGE_LEN+crypto_secretbox_NONCEBYTES];
+		unsigned char right_2_left_ciphertext[CIPHERTEXT_LEN], right_decrypted[MESSAGE_LEN+crypto_secretbox_NONCEBYTES];
 		//Left Side
 		if (FD_ISSET(left_peer, &fdr)){
 
