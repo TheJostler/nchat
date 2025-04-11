@@ -1,6 +1,6 @@
 name=nchat
 dest=/usr/bin
-flags=-Wall -Wextra -Werror -lsodium 
+flags=-Wall -Wextra -Werror -O3
 cc=gcc
 deps = $(wildcard *.h)
 scrs = $(wildcard *.c)
@@ -14,6 +14,7 @@ $(o)/%.o: %.c $(deps)
 
 $(name): $(objs)
 	$(cc) -o $@ $^ $(flags)
+	strip $@
 
 install:
 	cp $(name) $(dest)/$(name)
