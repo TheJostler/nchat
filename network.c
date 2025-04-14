@@ -23,19 +23,24 @@ int match(char *str, char *pattern) {
 	return pattern[i] == '\0';
 }
 
+void zero(unsigned char *buffer, size_t len) {
+	for (size_t i = 0; i < len; i++) {
+		buffer[i] = '\0';
+	}
+}
+
 int chat(int socfd) {
 	fd_set fds, fdr;
 	FD_ZERO(&fds);
 	FD_SET(0, &fds);    // add STDIN to the fd set
 	FD_SET(socfd, &fds);    // add peer socket to the fd set
 	printf("Welcome to the chat. Type '/bye' to disconnect.\n");
-	fdr = fds;
-	while (select(socfd+1, &fdr, NULL, NULL, NULL) > 0){
-		unsigned char message[MESSAGE_LEN], recieved[MESSAGE_LEN];
+	while (fdr = fds, select(socfd+1, &fdr, NULL, NULL, NULL) > 0){
+		unsigned char message[MESSAGE_LEN]={0}, recieved[MESSAGE_LEN]={0};
 		// this is the user's input
-		if (FD_ISSET(0, &fdr)){   
+		if (FD_ISSET(0, &fdr)){
+			zero(message, MESSAGE_LEN);
 			size_t count = read(0, message, MESSAGE_LEN);
-			memcpy(message+count, "\0", 1);
 			if (count > 0) {
 				if (match((char*)message, "/bye")) {
 					write(socfd, "\11", 1);
@@ -47,6 +52,7 @@ int chat(int socfd) {
 		}
 		// this is the peer's output or termination
 		if (FD_ISSET(socfd, &fdr)) {
+			zero(recieved, MESSAGE_LEN);
 			size_t count = read(socfd, recieved, MESSAGE_LEN);
 			if (match((char*)recieved, "\11") || count == 0) {
 					printf("\rPeer has disconnected from the chat...\n");
@@ -54,7 +60,7 @@ int chat(int socfd) {
 			}
 			write(1, "\r<- ", 4);
 			write(1, recieved, count);
-	}
+		} 
   }
 	return EXIT_SUCCESS;
 }
